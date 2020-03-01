@@ -1,4 +1,4 @@
-package top.tinn.StokeProblem.Problem_121;
+package top.tinn.StokeProblem_121_122_123_188_309_714.Problem_121;
 
 import org.junit.jupiter.api.Test;
 
