@@ -1,4 +1,4 @@
-package top.tinn.mianshiti.Problem_057;
+package top.tinn.InterviewProblem.Problem_057;
 
 import org.junit.jupiter.api.Test;
 

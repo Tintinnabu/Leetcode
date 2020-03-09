@@ -100,6 +100,5 @@ public class Solution {
         TreeNode root=deserialize(serial);
         System.out.println(serialize(MainClass.stringToTreeNode(tree)));
         System.out.println(serialize(root));
-
     }
 }
