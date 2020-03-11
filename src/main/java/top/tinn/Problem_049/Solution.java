@@ -1,4 +1,4 @@
-package top.tinn.Probloem_049;
+package top.tinn.Problem_049;
 
 import org.junit.jupiter.api.Test;
 
