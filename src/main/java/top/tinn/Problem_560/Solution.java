@@ -58,6 +58,6 @@ public class Solution {
     public void test(){
         int[] nums=new int[]{1,-1,1,1,-1};
         int k=0;
-        System.out.println(subarraySum(nums,k));
+        System.out.println(subarraySum2(nums,k));
     }
 }

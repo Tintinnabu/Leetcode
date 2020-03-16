@@ -1,4 +1,4 @@
-package top.tinn.Problem_300;
+package top.tinn.BinarySearchProblem.Problem_300;
 
 import org.junit.jupiter.api.Test;
 
