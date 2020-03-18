@@ -11,7 +11,6 @@ public class Solution {
                 dp=dp+1;
                 sum+=dp;
             }else dp=0;
-
         }
         return sum;
     }
