@@ -1,5 +1,7 @@
 package top.tinn.Problem_207;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.LinkedList;
 
 /**
@@ -78,6 +80,17 @@ public class Solution {
         }
         flags[i] = -1;
         return true;
+    }
+
+    @Test
+    public void test(){
+        int numCourses = 4;
+        int[][] prerequisites = new int[4][2];
+        prerequisites[0] = new int[]{1,0};
+        prerequisites[1] = new int[]{2,0};
+        prerequisites[2] = new int[]{3,1};
+        prerequisites[3] = new int[]{3,2};
+        canFinish2(numCourses, prerequisites);
     }
 
 }
