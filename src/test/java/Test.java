@@ -1,4 +1,5 @@
 import java.util.Map;
+import java.util.Stack;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
@@ -35,7 +36,8 @@ class Test2 extends Test{
         Test2 test2=new Test2();
         Test2 test3=new Test2();
         System.out.println(test2.equals(test3));
-
+        /*Stack<Integer> stack = new Stack<>();
+        stack.push(null);*/
     }
 }
 

@@ -33,11 +33,14 @@ public class KMP {
         // 当前状态 j 从 1 开始
         for (int j=1;j<M;j++){
             for (int c=0;c<256;c++){
+                //状态推进
                 if (pat.charAt(j)==c)
                     dp[j][c]=j+1;
+                //状态重启
                 else dp[j][c]=dp[X][c];
             }
             // 更新影子状态
+            // 影子状态，就是和当前状态具有相同的前缀
             X=dp[X][pat.charAt(j)];
         }
     }
@@ -52,13 +55,15 @@ public class KMP {
         for (int i=0;i<N;i++){
             //状态转移
             j=dp[j][txt.charAt(i)];
+            // 如果达到终止态，返回匹配开头的索引
             if (j==M) return i-M+1;
         }
         return -1;
     }
 
     public static void main(String[] args) {
-        KMP kmp = new KMP("aaab");
+        //KMP kmp = new KMP("aaab");
+        KMP kmp = new KMP("ababc");
         int pos1 = kmp.search("aaacaaab"); //4
         int pos2 = kmp.search("aaaaaaab"); //4
         System.out.println(pos1);
