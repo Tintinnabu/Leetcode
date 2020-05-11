@@ -59,10 +59,21 @@ public class Solution {
     }
 
 
+    private long pre = Long.MIN_VALUE;
+    public boolean isValidBST2(TreeNode root) {
+        if (root == null) return true;
+        if(!isValidBST2(root.left)) return false;
+        if (root.val <= pre) return false;
+        pre = root.val;
+        return isValidBST2(root.right);
+    }
+
     @Test
     public void test(){
 
         System.out.println(isValidBST(MainClass.stringToTreeNode("[5,1,4,null,null,3,6]")));
         System.out.println(isValidBST(MainClass.stringToTreeNode("[0]")));
+        //System.out.println(isValidBST2(MainClass.stringToTreeNode("[5,1,4,null,null,3,6]")));
+        System.out.println(isValidBST2(MainClass.stringToTreeNode("[0]")));
     }
 }
