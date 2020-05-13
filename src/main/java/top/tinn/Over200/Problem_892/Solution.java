@@ -19,25 +19,34 @@ public class Solution {
                 if (grid[i][j] > 0){
                     up++;
                 }
-                if (grid[i][j] >= leftPre) leftPre = grid[i][j];
-                else {
-                    left += leftPre;
-                    leftPre = grid[i][j];
-                }
+                left += Math.abs(grid[i][j] - leftPre);
+                leftPre = grid[i][j];
+                if (j == col - 1) left += leftPre;
             }
-            left += leftPre;
         }
         for (int i = 0; i < col; i++){
             frontPre = 0;
             for (int j = 0; j < row; j++){
-                if (grid[j][i] >= frontPre) frontPre = grid[j][i];
-                else {
-                    front += frontPre;
-                    frontPre = grid[j][i];
+                front += Math.abs(grid[j][i] - frontPre);
+                frontPre = grid[j][i];
+                if (j == row - 1) front += frontPre;
+            }
+        }
+        return 2 * up + left + front;
+    }
+
+    public int surfaceArea2(int[][] grid) {
+        int n = grid.length, area = 0;
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
+                int level = grid[i][j];
+                if (level > 0){
+                    area += (level << 2) + 2;
+                    area -= i > 0 ? Math.min(level, grid[i - 1][j]) << 1 : 0;
+                    area -= j > 0 ? Math.min(level, grid[i][j - 1]) << 1 : 0;
                 }
             }
-            front += frontPre;
         }
-        return 2 * (up + left + front);
+        return area;
     }
 }

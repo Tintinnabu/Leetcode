@@ -35,6 +35,7 @@ import java.util.Queue;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Solution {
+    //迭代
     public List<List<Integer>> levelOrder(TreeNode root) {
         if (root==null) return new ArrayList<>();
         List<List<Integer>> result=new ArrayList<>();
@@ -54,6 +55,7 @@ public class Solution {
         return result;
     }
 
+    //递归
     public List<List<Integer>> levelOrder2(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         helper(root, result, 0);
