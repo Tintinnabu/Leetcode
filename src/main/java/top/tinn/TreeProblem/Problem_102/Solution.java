@@ -54,6 +54,20 @@ public class Solution {
         return result;
     }
 
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        helper(root, result, 0);
+        return result;
+    }
+
+    private void helper(TreeNode root, List<List<Integer>> result, int depth) {
+        if (root == null) return;
+        if (result.size() == depth) result.add(new ArrayList<>());
+        result.get(depth).add(root.val);
+        helper(root.left, result, depth + 1);
+        helper(root.right, result, depth + 1);
+    }
+
     @Test
     public void test(){
         String s="[3,9,20,null,null,15,7]";
