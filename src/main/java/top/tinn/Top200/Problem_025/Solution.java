@@ -57,11 +57,36 @@ public class Solution {
     }
 
 
+    public ListNode reverseKGroup2(ListNode head, int k) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy, cur = head;
+        while (cur != null){
+            ListNode check = cur;
+            int count = k, i = k;
+            while (count > 0 && check != null){
+                count--;
+                check = check.next;
+            }
+            if (count > 0) break;
+            while (i > 1){
+                ListNode temp = cur.next;
+                cur.next = cur.next.next;
+                temp.next = pre.next;
+                pre.next = temp;
+                i--;
+            }
+            pre = cur;
+            cur = cur.next;
+        }
+        return dummy.next;
+    }
+
 
     @Test
     public void test(){
         String listnode="[1,2,3,4,5]";
-        ListNode node=reverseKGroup(MainClass.stringToListNode(listnode),3);
+        ListNode node=reverseKGroup2(MainClass.stringToListNode(listnode),3);
         System.out.println(MainClass.listNodeToString(node));
     }
 }
