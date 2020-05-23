@@ -25,32 +25,39 @@ import java.util.Map;
  */
 public class Solution {
     public String minWindow(String s, String t) {
-        int l=0,r=0,start=0,match=0;
-        int minLen=Integer.MAX_VALUE;
-        Map<Character,Integer> tMap=new HashMap<>();
-        Map<Character,Integer> windowMap=new HashMap<>();
-        for (char c:t.toCharArray()) tMap.put(c,tMap.getOrDefault(c,0)+1);
-        while (r<s.length()){
-            char c=s.charAt(r);
-            if (tMap.containsKey(c)){
-                windowMap.put(c,windowMap.getOrDefault(c,0)+1);
-                if (windowMap.get(c).equals(tMap.get(c))) match++;
+        int l = 0, r = 0, match = 0, start = 0, len = Integer.MAX_VALUE, size = 0;
+        int[] tMap = new int[128];
+        int[] windowMap = new int[128];
+        for (char c : t.toCharArray()){
+            if (tMap[c] == 0){
+                size++;
             }
-            r++;
-            while (match==tMap.size()){
-                if(r-l<minLen){
-                    start=l;
-                    minLen=r-l;
+            tMap[c]++;
+        }
+        char[] chars = s.toCharArray();
+        while (r < s.length()){
+            if (tMap[chars[r]] > 0){
+                windowMap[chars[r]]++;
+                if (windowMap[chars[r]] == tMap[chars[r]]){
+                    match++;
                 }
-                char c2=s.charAt(l);
-                if (tMap.containsKey(c2)){
-                    windowMap.put(c2,windowMap.getOrDefault(c2,0)-1);
-                    if (windowMap.getOrDefault(c2,0)<tMap.get(c2)) match--;
+            }
+            while (match == size){
+                if (r - l + 1 < len){
+                    start = l;
+                    len = r - l + 1;
+                }
+                if (tMap[chars[l]] > 0){
+                    windowMap[chars[l]]--;
+                    if (windowMap[chars[l]] < tMap[chars[l]]){
+                        match--;
+                    }
                 }
                 l++;
             }
+            r++;
         }
-        return minLen==Integer.MAX_VALUE?"":s.substring(start,start+minLen);
+        return len == Integer.MAX_VALUE ? "" : s.substring(start, start + len);
     }
 
     @Test
