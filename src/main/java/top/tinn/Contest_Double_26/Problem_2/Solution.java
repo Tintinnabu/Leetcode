@@ -1,4 +1,4 @@
-package top.tinn.Contest_26.Problem_2;
+package top.tinn.Contest_Double_26.Problem_2;
 
 import java.util.ArrayList;
 import java.util.List;

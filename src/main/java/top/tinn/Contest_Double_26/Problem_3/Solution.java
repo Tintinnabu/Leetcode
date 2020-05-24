@@ -1,4 +1,4 @@
-package top.tinn.Contest_26.Problem_3;
+package top.tinn.Contest_Double_26.Problem_3;
 
 import top.tinn.utils.TreeNode;
 

@@ -1,7 +1,6 @@
-package top.tinn.Contest_26.Problem_4;
+package top.tinn.Contest_Double_26.Problem_4;
 
 import org.junit.jupiter.api.Test;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package top.tinn.Contest_26.Problem_1;
+package top.tinn.Contest_Double_26.Problem_1;
 
 import org.junit.jupiter.api.Test;
 
