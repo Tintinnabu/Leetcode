@@ -53,18 +53,19 @@ public class Solution {
         return stack.isEmpty();
     }
 
+    //dp O(N)
     public int longestValidParentheses2(String s) {
-        int max=0;
-        int[] dp=new int[s.length()];
-        for (int i=1;i<s.length();i++){
-            char c=s.charAt(i);
-            if (c==')'){
-                if (s.charAt(i-1)=='(')
-                    dp[i]=(i>=2?dp[i-2]:0)+2;
-                else if (i-dp[i-1]>0&&s.charAt(i-dp[i-1]-1)=='('){
-                    dp[i]=dp[i-1]+2+(i-dp[i-1]>=2?dp[i-dp[i-1]-2]:0);
+        int max = 0;
+        int[] dp = new int[s.length()];
+        char[] chars = s.toCharArray();
+        for (int i = 1; i < chars.length; i++){
+            if (chars[i] == ')'){
+                if (chars[i - 1] == '('){
+                    dp[i] = 2 + (i >= 2 ? dp[i - 2] : 0);
+                }else if (i - dp[i - 1] - 1 >= 0 && chars[i - dp[i - 1] - 1] == '('){
+                    dp[i] = dp[i - 1] + 2 + (i - dp[i - 1] >= 2 ? dp[i -dp[i - 1] - 2] : 0);
                 }
-                max=Math.max(max,dp[i]);
+                max = Math.max(max, dp[i]);
             }
         }
         return max;

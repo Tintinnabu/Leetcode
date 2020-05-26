@@ -50,7 +50,6 @@ public class Solution {
 
     private void backtrack(int[] candidates,int target,int start,List<Integer> list){
         if (target==0) result.add(new ArrayList<>(list));
-        else if (target<0) return;
         else {
             for (int i=start;i<candidates.length;i++){
                 if (target>=candidates[i]){

@@ -2,6 +2,8 @@ package top.tinn.BinarySearchProblem.Problem_034;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 /**
  * 34. 在排序数组中查找元素的第一个和最后一个位置
  *
@@ -26,38 +28,49 @@ import org.junit.jupiter.api.Test;
  */
 public class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int[] result=new int[2];
-        int l=0,r=nums.length-1;
-        while (l<=r){
-            int mid=l+(r-l)/2;
-            if (nums[mid]<target){
-                l=mid+1;
-            }else if (nums[mid]>target){
-                r=mid-1;
-            }else if (nums[mid]==target){
-                r=mid-1;
+        int[] result = {-1, -1};
+        int l = 0, r = nums.length - 1;
+        //找到最大的小于target的值
+        while (l <= r){
+            int mid = l + (r - l) / 2;
+            if (nums[mid] < target){
+                l = mid + 1;
+            }else if (nums[mid] == target){
+                r = mid - 1;
+            }else {
+                r = mid - 1;
             }
         }
-        result[0]=l;
-        l=0;r=nums.length-1;
-        while (l<=r){
-            int mid=l+(r-l)/2;
-            if (nums[mid]<target){
-                l=mid+1;
-            }else if (nums[mid]>target){
-                r=mid-1;
-            }else if (nums[mid]==target){
-                l=mid+1;
+        //l = h + 1;
+        if (l >= nums.length || nums[l] != target){
+            return result;
+        }
+        result[0] = l;
+        l = 0;
+        r = nums.length - 1;
+        //找到最小的大于target的值
+        while (l <= r){
+            int mid = l + (r - l) / 2;
+            if (nums[mid] > target){
+                r = mid - 1;
+            }else if (nums[mid] == target){
+                l = mid + 1;
+            }else {
+                l = mid + 1;
             }
         }
-        result[1]=r;
+        //l = r + 1;
+        /*if (r < 0 || nums[r] != target){
+            return result;
+        }*/
+        result[1] = r;
         return result;
     }
 
     @Test
     public void test(){
         int[] nums={5,7,7,7,8,10};
-        int[] res=searchRange(nums,7);
-        System.out.println(searchRange(nums,7));
+        int[] res=searchRange(nums,6);
+        System.out.println(Arrays.toString(res));
     }
 }

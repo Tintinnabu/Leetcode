@@ -2,6 +2,8 @@ package top.tinn.DoublePointsProblem.Problem_042;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Stack;
+
 /**
  * 42. 接雨水
  *
@@ -45,9 +47,84 @@ public class Solution {
         return sum;
     }
 
+    //单调栈
+    public int trap2(int[] height) {
+        if (height == null){
+            return 0;
+        }
+        Stack<Integer> stack = new Stack<>();
+        int ret = 0;
+        for (int i = 0; i < height.length; i++){
+            while (!stack.isEmpty() && height[stack.peek()] < height[i]){
+                int curIdx = stack.pop();
+                // 如果栈顶元素一直相等，那么全都pop出去，只留第一个。
+                while (!stack.isEmpty() && height[stack.peek()] == height[curIdx]){
+                    stack.pop();
+                }
+                if (!stack.isEmpty()){
+                    int stackTop = stack.peek();
+                    ret += (Math.min(height[stackTop], height[i]) - height[curIdx]) * (i - stackTop - 1);
+                }
+            }
+            stack.push(i);
+        }
+        return ret;
+    }
+
+    //dp
+    public int trap3(int[] height) {
+        int ret = 0;
+        int[] maxLeft = new int[height.length];
+        int[] maxRight = new int[height.length];
+        for (int i = 1; i < height.length - 1; i++){
+            maxLeft[i] = Math.max(maxLeft[i - 1], height[i - 1]);
+        }
+        for (int i = height.length - 2; i >= 0; i--) {
+            maxRight[i] = Math.max(maxRight[i + 1], height[i + 1]);
+        }
+
+        for (int i = 1; i < height.length - 1; i++){
+            int min = Math.min(maxLeft[i], maxRight[i]);
+            if (min > height[i]){
+                ret += (min - height[i]);
+            }
+        }
+        return ret;
+    }
+
+    //double points
+    public int trap4(int[] height) {
+        int sum = 0;
+        int max_left = 0, max_right = 0;
+        int left = 1, right = height.length - 2;
+        for (int i = 1; i < height.length - 1; i++){
+            //从左到右更
+            if (height[left - 1] < height[right + 1]) {
+                max_left = Math.max(max_left, height[left - 1]);
+                if (max_left > height[left]){
+                    sum += (max_left - height[left]);
+                }
+                left++;
+                //从右到左更
+            } else {
+                max_right = Math.max(max_right, height[right + 1]);
+                int min = max_right;
+                if (min > height[right]) {
+                    sum = sum + (min - height[right]);
+                }
+                right--;
+            }
+        }
+        return sum;
+    }
+
+
     @Test
     public void test(){
         int[] height={5,4,1,2};
         System.out.println(trap(height));
+        System.out.println(trap2(height));
+        System.out.println(trap3(height));
+        System.out.println(trap4(height));
     }
 }
