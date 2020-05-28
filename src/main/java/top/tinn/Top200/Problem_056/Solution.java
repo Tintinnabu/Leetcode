@@ -30,6 +30,20 @@ public class Solution {
         return list.toArray(new int[][]{});
     }
 
+    public int[][] merge2(int[][] intervals) {
+        Arrays.sort(intervals, ((o1, o2) -> o1[0] -o2[0]));
+        int[][] res = new int[intervals.length][2];
+        int idx = -1;
+        for (int[] interval : intervals){
+            if (idx == -1 || interval[0] > res[idx][1]){
+                res[++idx] = interval;
+            }else {
+                res[idx][1] = Math.max(res[idx][1], interval[1]);
+            }
+        }
+        return Arrays.copyOf(res, idx + 1);
+    }
+
 
     @Test
     public void test(){
@@ -38,6 +52,7 @@ public class Solution {
         intervals[1]=new int[]{4,5};
         intervals[2]=new int[]{6,7};
         intervals[3]=new int[]{1,10};
-        System.out.println(Arrays.toString(merge(intervals)));;
+        System.out.println(Arrays.toString(merge(intervals)));
+        System.out.println(Arrays.toString(merge2(intervals)));
     }
 }

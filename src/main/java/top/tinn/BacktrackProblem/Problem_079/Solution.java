@@ -27,35 +27,62 @@ import org.junit.jupiter.api.Test;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Solution {
-    private boolean result;
-    private boolean[][] mark;
+
+    private boolean[][] marked;
+
+    //        x-1,y
+    // x,y-1  x,y    x,y+1
+    //        x+1,y
+    private int[][] direction = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+    // 盘面上有多少行
+    private int m;
+    // 盘面上有多少列
+    private int n;
+    private String word;
+    private char[][] board;
+
     public boolean exist(char[][] board, String word) {
-        result=false;
-        mark=new boolean[board.length][board[0].length];
-        for (int i=0;i<board.length;i++){
-            for (int j=0;j<board[0].length;j++){
-                backtrack(board,word,i,j,0);
+        m = board.length;
+        if (m == 0) {
+            return false;
+        }
+        n = board[0].length;
+        marked = new boolean[m][n];
+        this.word = word;
+        this.board = board;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (dfs(i, j, 0)) {
+                    return true;
+                }
             }
         }
-        return result;
+        return false;
     }
 
-    private void backtrack(char[][] board, String word,int row,int column,int k){
-        if (k==word.length()) {
-            result=true;
-            return;
+    private boolean dfs(int i, int j, int start) {
+        if (start == word.length() - 1) {
+            return board[i][j] == word.charAt(start);
         }
-        if (row<0||row>=board.length||column<0||column>=board[0].length) return;
-        if (mark[row][column]) return;
-        if (board[row][column]!=word.charAt(k)) return;
-        else{
-            mark[row][column]=true;
-            backtrack(board,word,row+1,column,k+1);
-            backtrack(board,word,row-1,column,k+1);
-            backtrack(board,word,row,column+1,k+1);
-            backtrack(board,word,row,column-1,k+1);
-            mark[row][column]=false;
+        if (board[i][j] == word.charAt(start)) {
+            marked[i][j] = true;
+            for (int k = 0; k < 4; k++) {
+                int newX = i + direction[k][0];
+                int newY = j + direction[k][1];
+                if (inArea(newX, newY) && !marked[newX][newY]) {
+                    if (dfs(newX, newY, start + 1)) {
+                        return true;
+                    }
+                }
+            }
+            marked[i][j] = false;
         }
+        return false;
+    }
+
+    private boolean inArea(int x, int y) {
+        return x >= 0 && x < m && y >= 0 && y < n;
     }
 
     @Test
@@ -64,6 +91,7 @@ public class Solution {
         board[0] = new char[]{'A', 'B', 'C', 'E'};
         board[1] = new char[]{'S', 'F', 'C', 'S'};
         board[2] = new char[]{'A', 'D', 'E', 'E'};
-        exist(board,"ABCCED");
+        boolean ret = exist(board,"ABCCED");
+        System.out.println(ret);
     }
 }

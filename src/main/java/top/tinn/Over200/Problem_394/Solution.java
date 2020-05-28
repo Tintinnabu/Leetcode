@@ -27,31 +27,63 @@ import java.util.Stack;
  */
 public class Solution {
     public String decodeString(String s) {
-        StringBuilder sb=new StringBuilder();
-        Stack<Integer> multyStack=new Stack<>();
-        Stack<String> stringStack=new Stack<>();
-        int multi=0;
-        for(char c:s.toCharArray()){
-            if(c>='0'&&c<='9') multi=10*multi+c-'0';
-            else if(c=='['){
-                multyStack.add(multi);
-                stringStack.add(sb.toString());
-                multi=0;
-                sb=new StringBuilder();
-            }else if(c==']'){
-                StringBuilder tmp=new StringBuilder();
-                int cur_multi=multyStack.pop();
-                for(int i=0;i<cur_multi;i++) tmp.append(sb);
-                sb=new StringBuilder(stringStack.pop()+tmp);
-            }else
+        StringBuilder sb = new StringBuilder();
+        Stack<Integer> multiStack = new Stack<>();
+        Stack<String> stringStack = new Stack<>();
+        int multi = 0;
+        for (char c : s.toCharArray()){
+            if (c >= '0' && c <= '9'){
+                multi = 10 * multi + c - '0';
+            }else if (c == '['){
+                multiStack.push(multi);
+                multi = 0;
+                stringStack.push(sb.toString());
+                sb = new StringBuilder();
+            }else if (c == ']'){
+                int curMulti = multiStack.pop();
+                StringBuilder tmp = new StringBuilder(stringStack.pop());
+                for (int i = 0; i < curMulti; i++){
+                    tmp.append(sb);
+                }
+                sb = tmp;
+            }else {
                 sb.append(c);
+            }
         }
         return sb.toString();
+    }
+
+    public String decodeString2(String s) {
+        return dfs(s, 0)[0];
+    }
+
+    private String[] dfs(String s, int i) {
+        StringBuilder res = new StringBuilder();
+        int multi = 0;
+        while (i < s.length()){
+            if (s.charAt(i) >= '0' && s.charAt(i) <= '9'){
+                multi = 10 * multi + s.charAt(i) - '0';
+            }else if (s.charAt(i) == '['){
+                String[] temp = dfs(s, i + 1);
+                //更新同层下dfs后的i
+                i = Integer.parseInt(temp[0]);
+                while(multi > 0) {
+                    res.append(temp[1]);
+                    multi--;
+                }
+            }else if (s.charAt(i) == ']'){
+                return new String[]{String.valueOf(i), res.toString()};
+            }else {
+                res.append(s.charAt(i));
+            }
+            i++;
+        }
+        return new String[]{res.toString()};
     }
 
 
     @Test
     public void test(){
-        System.out.println(decodeString("3[a2[c]]"));
+        System.out.println(decodeString2("2[ad3[c]]"));
     }
 }

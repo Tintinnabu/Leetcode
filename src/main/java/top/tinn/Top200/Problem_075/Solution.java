@@ -13,19 +13,20 @@ import java.util.Random;
  */
 public class Solution {
     public void sortColors(int[] nums) {
-        int l=0,r=nums.length-1,curr=0;
-        while(curr<=r){
-            if(nums[curr]==0){
-                swap(nums, l, curr);
-                curr++;
+        int l = 0, r = nums.length - 1;
+        int cur = 0;
+        while (cur <= r){
+            if (nums[cur] == 0){
+                swap(nums, cur, l);
+                cur++;
                 l++;
-            }
-            else if(nums[curr]==2){
-                swap(nums, r, curr);
+            }else if (nums[cur] == 2){
+                swap(nums, cur, r);
                 r--;
-            }else curr++;
+            }else {
+                cur++;
+            }
         }
-        Arrays.sort(nums);
     }
 
     private void swap(int[] nums, int i, int j){
