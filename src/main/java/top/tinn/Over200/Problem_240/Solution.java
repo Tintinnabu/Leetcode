@@ -29,27 +29,6 @@ import org.junit.jupiter.api.Test;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Solution {
-    public boolean searchMatrix(int[][] matrix, int target) {
-        int row=matrix.length;
-        if(row<1) return false;
-        int column=matrix[0].length;
-        if(column<1) return false;
-
-        for(int i=0;i<row;i++){
-            if(matrix[i][column-1]<target) continue;
-            else if(matrix[i][0]<=target){
-                int l=0,r=column;
-                while(l<=r){
-                    int mid=l+(r-l)/2;
-                    if(matrix[i][mid]<target) l=mid+1;
-                    else if(matrix[i][mid]>target) r=mid-1;
-                    else return true;
-                }
-            }else
-                break;
-        }
-        return false;
-    }
 
     public boolean searchMatrix2(int[][] matrix, int target) {
         int row=matrix.length-1;
@@ -71,6 +50,6 @@ public class Solution {
         matrix[3]=new int[]{10,13,14,17,24};
         matrix[4]=new int[]{18,21,23,26,30};
 
-        System.out.println(searchMatrix(matrix,5));
+        System.out.println(searchMatrix2(matrix,5));
     }
 }
