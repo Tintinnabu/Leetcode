@@ -38,16 +38,43 @@ public class Solution {
         }
         return result;
     }
+
+    /**
+     * 算法流程：
+     *
+     * 状态定义：
+     *
+     * tails[k]tails[k] 的值代表 长度为 k+1k+1 子序列 的尾部元素值。
+     * 转移方程： 设 resres 为 tailstails 当前长度，代表直到当前的最长上升子序列长度。设 j∈[0,res)j∈[0,res)，考虑每轮遍历 nums[k]nums[k] 时，通过二分法遍历 [0,res)[0,res) 列表区间，找出 nums[k]nums[k] 的大小分界点，会出现两种情况：
+     *
+     * 区间中存在 tails[i] > nums[k]tails[i]>nums[k] ： 将第一个满足 tails[i] > nums[k]tails[i]>nums[k] 执行 tails[i] = nums[k]tails[i]=nums[k] ；因为更小的 nums[k]nums[k] 后更可能接一个比它大的数字（前面分析过）。
+     * 区间中不存在 tails[i] > nums[k]tails[i]>nums[k] ： 意味着 nums[k]nums[k] 可以接在前面所有长度的子序列之后，因此肯定是接到最长的后面（长度为 resres ），新子序列长度为 res + 1res+1。
+     * 初始状态：
+     *
+     * 令 tailstails 列表所有值 =0=0。
+     * 返回值：
+     *
+     * 返回 resres ，即最长上升子子序列长度。
+     */
     public int lengthOfLIS2(int[] nums) {
-        int[] dp=new int[nums.length];
-        int len=0;
-        for(int num:nums){
-            int i=Arrays.binarySearch(dp,0,len,num);
-            if (i<0) i=-(i+1);
-            dp[i]=num;
-            if(i==len) len++;
+        int[] tails = new int[nums.length];
+        int res = 0;
+        for (int num : nums){
+            int i = 0, j = res;
+            while (i < j){
+                int mid = (j - i) / 2 + i;
+                if (tails[mid] < num){
+                    i = mid + 1;
+                }else {
+                    j = mid;
+                }
+            }
+            tails[i] = num;
+            if (res == j){
+                res++;
+            }
         }
-        return len;
+        return res;
     }
 
     @Test

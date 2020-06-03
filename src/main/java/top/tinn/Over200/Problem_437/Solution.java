@@ -2,6 +2,9 @@ package top.tinn.Over200.Problem_437;
 
 import top.tinn.utils.TreeNode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 437. 路径总和 III
  *
@@ -47,6 +50,26 @@ public class Solution {
         int res=0;
         if(sum== startNode.val) res+=1;
         res+=startPathSum(startNode.left,sum-startNode.val)+startPathSum(startNode.right,sum-startNode.val);
+        return res;
+    }
+
+    public int pathSum2(TreeNode root, int sum) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        return helper(root, map, sum, 0);
+    }
+
+    private int helper(TreeNode root, Map<Integer, Integer> map, int sum, int pathSum) {
+        int res = 0;
+        if (root == null){
+            return res;
+        }
+
+        pathSum += root.val;
+        res += map.getOrDefault(pathSum - sum, 0);
+        map.put(pathSum, map.getOrDefault(pathSum, 0) + 1);
+        res += helper(root.left, map, sum, pathSum) + helper(root.right, map, sum, pathSum);
+        map.put(pathSum, map.get(pathSum) - 1);
         return res;
     }
 }
