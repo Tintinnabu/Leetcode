@@ -2,7 +2,9 @@ package top.tinn.Top200.Problem_128;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -38,8 +40,27 @@ public class Solution {
         return max;
     }
 
+    //
+    public int longestConsecutive2(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int max = 0;
+        for (int num : nums){
+            if (map.containsKey(num)){
+                continue;
+            }
+            int left =  map.getOrDefault(num - 1, 0);
+            int right = map.getOrDefault(num + 1, 0);
+            int sum = 1 + left + right;
+            max = Math.max(max, sum);
+            map.put(num, -1);
+            map.put(num - left, sum);
+            map.put(num + right, sum);
+        }
+        return max;
+    }
+
     @Test
     public void test(){
-        System.out.println(longestConsecutive(new int[]{100, 4, 200, 1, 3, 2}));
+        System.out.println(longestConsecutive2(new int[]{100, 4, 200, 1, 3, 2}));
     }
 }

@@ -50,7 +50,6 @@ public class Solution {
         for(int i=1;i<size;i++){
             for(int j=1;j<=target;j++){
                 dp[i][j] = dp[i - 1][j];
-
                 if (nums[i] <= j) {
                     dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
                 }
@@ -90,8 +89,8 @@ public class Solution {
                 if (dp[target]) {
                     return true;
                 }
-                dp[j]=dp[j]||dp[j-nums[i]];}
-
+                dp[j]=dp[j]||dp[j-nums[i]];
+            }
         }
         return dp[target];
     }

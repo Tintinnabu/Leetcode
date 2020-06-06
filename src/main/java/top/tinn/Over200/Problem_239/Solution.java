@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Stack;
 
 /**
  * @ClassName Solution
@@ -63,6 +64,7 @@ public class Solution {
             }
         }
         return res;
+
     }
 
     private void popNum(int num) {

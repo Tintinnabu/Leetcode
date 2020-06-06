@@ -32,6 +32,6 @@ public class Solution {
         List<int[]> result=new ArrayList<>();
         for(int[] quque:people)
             result.add(quque[1],quque);
-        return result.toArray(new int[people.length][]);
+        return result.toArray(new int[0][0]);
     }
 }
