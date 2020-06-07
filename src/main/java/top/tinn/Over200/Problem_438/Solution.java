@@ -104,9 +104,10 @@ public class Solution {
         return result;
     }
 
+
     @Test
     public void test(){
-        String s="cbaebabacd";
+        String s="abab";
         String p="ab";
         System.out.println(findAnagrams2(s,p));
     }
