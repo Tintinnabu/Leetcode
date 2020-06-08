@@ -30,23 +30,28 @@ import java.util.Arrays;
  */
 public class Solution {
     public int maxCoins(int[] nums) {
-        int dp[][] = new int[nums.length][nums.length];
-        if(nums.length == 0){  //沙雕测试用例[]
-            return 0;
+        int n = nums.length;
+        int[] points = new int[n + 2];
+        points[0] = points[n + 1] = 1;
+        for (int i = 1; i <= n; i++){
+            points[i] = nums[i - 1];
         }
-        for(int i = 0; i<nums.length; i++){
-            for(int j = 0;j<nums.length-i;j++){
-                fill(dp,nums,j,j+i);
+        //dp[i][j] = x 表示，戳破气球 i 和气球 j 之间（开区间，不包括 i 和 j）的所有气球，可以获得的最高分数为x
+        int[][] dp = new int[n + 2][n + 2];
+        for (int i = n; i >= 0; i--) {
+            // j 应该从左往右
+            for (int j = i + 1; j < n + 2; j++) {
+                // 最后戳破的气球是哪个？
+                for (int k = i + 1; k < j; k++) {
+                    // 择优做选择
+                    dp[i][j] = Math.max(
+                            dp[i][j],
+                            dp[i][k] + dp[k][j] + points[i]*points[j]*points[k]
+                    );
+                }
             }
         }
-        return dp[0][nums.length-1];
-    }
-    void fill(int[][] dp,int nums[],int start,int end){
-        int max = 0;
-        for(int i=start; i<=end;i++){
-            max = Math.max(max,(start-1<0 ? 1 : nums[start-1])*nums[i]*(end+1>nums.length-1 ? 1 : nums[end+1]) + (start>i-1 ? 0 : dp[start][i-1]) + (end < i+1 ? 0 : dp[i+1][end]));
-        }
-        dp[start][end] = max;
+        return dp[0][n + 1];
     }
 
     @Test
