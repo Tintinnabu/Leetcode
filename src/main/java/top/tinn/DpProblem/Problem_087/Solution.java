@@ -76,8 +76,48 @@ public class Solution {
         return false;
     }
 
+    public boolean isScramble2(String s1, String s2) {
+        if (s1.length()!=s2.length()) return false;
+        if (s1.equals(s2)) return true;
+        int[] letters=new int[26];
+        for (int i=0;i<s1.length();i++){
+            letters[s1.charAt(i)-'a']++;
+            letters[s2.charAt(i)-'a']--;
+        }
+        for (int n:letters){
+            if (n!=0) return false;
+        }
+        int n = s1.length();
+        char[] chs1 = s1.toCharArray();
+        char[] chs2 = s2.toCharArray();
+        boolean[][][] dp = new boolean[n][n][n + 1];
+        for(int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
+                dp[i][j][1] = chs1[i] == chs2[j];
+            }
+        }
+        ///枚举区间长度2-n
+        for (int len = 2; len <= n; len++){
+            for (int i = 0; i <= n - len; i++){
+                for (int j = 0; j <= n - len; j++){
+                    for (int k = 1; k <= len - 1; k++){
+                        if (dp[i][j][k] && dp[i + k][j + k][len - k]){
+                            dp[i][j][len] = true;
+                            break;
+                        }
+                        if (dp[i][j + len - k][k] && dp[i + k][j][len - k]){
+                            dp[i][j][len] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[0][0][n];
+    }
+
     @Test
     public void test(){
-        System.out.println(isScramble("abb","bab"));
+        System.out.println(isScramble2("abb","bab"));
     }
 }
