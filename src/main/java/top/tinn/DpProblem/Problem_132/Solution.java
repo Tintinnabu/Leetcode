@@ -46,16 +46,6 @@ public class Solution {
         return dp[len-1];
     }
 
-    private boolean isPalindrome(String s, int left, int right) {
-        while (left < right) {
-            if (s.charAt(left) != s.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
-        }
-        return true;
-    }
 
     @Test
     public void test(){
