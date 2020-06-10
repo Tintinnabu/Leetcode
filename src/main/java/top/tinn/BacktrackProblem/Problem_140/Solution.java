@@ -2,9 +2,7 @@ package top.tinn.BacktrackProblem.Problem_140;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * 140. 单词拆分 II
@@ -50,47 +48,49 @@ import java.util.List;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Solution {
-    int maxWordLength;
     public List<String> wordBreak(String s, List<String> wordDict) {
-        List<String> result=new ArrayList<>();
-        wordDict.sort((String a,String b)->(b.length()-a.length()));
-        if (canWordBreak(s,wordDict))
-            backtrack(s,wordDict,result,0,new ArrayList<>());
-        return result;
-    }
-
-    private boolean canWordBreak(String s, List<String> wordDict) {
-        //dp[i]表示字符串s的前i个字符能否拆分成wordDict
-        boolean[] dp=new boolean[s.length()+1];
-        dp[0]=true;
-        maxWordLength=0;
-        for(String str:wordDict){
-            maxWordLength= Math.max(maxWordLength, str.length());
+        int len = s.length();
+        boolean[] dp = new boolean[len + 1];
+        dp[0] = true;
+        int maxLength = 0;
+        Set<String> wordSet = new HashSet<>(wordDict);
+        List<String> res = new ArrayList<>();
+        for (String word : wordDict){
+            maxLength = Math.max(maxLength, word.length());
         }
-        for(int i=1;i<=s.length();i++){
-            for(int j=Math.max(0,i-maxWordLength);j<i;j++){
-                if(dp[j]&&wordDict.contains(s.substring(j,i))){
-                    dp[i]=true;
+        for (int i = 1; i <= len; i++){
+            for(int j = Math.max(0, i - maxLength); j < i; j++){
+                if (dp[j] && wordSet.contains(s.substring(j, i))){
+                    dp[i] = true;
                     break;
                 }
             }
         }
-        return dp[s.length()];
+        if (dp[len]){
+            dfs(s, wordSet, new LinkedList<>(), len, res, dp);
+        }
+        return res;
     }
 
-    private void backtrack(String s, List<String> wordDict,List<String> result,int currPos,List<Integer> temp){
-        if (currPos==s.length()){
-            StringBuilder sb=new StringBuilder(s);
-            for (int i=temp.size()-2;i>=0;i--)
-                sb.insert(temp.get(i)," ");
-            result.add(sb.toString());
+    private void dfs(String s, Set<String> wordSet, LinkedList<String> temp, int end, List<String> res, boolean[] dp){
+        if (end == 0){
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String word : temp) {
+                stringBuilder.append(word);
+                stringBuilder.append(" ");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            res.add(stringBuilder.toString());
             return;
         }
-        for (int j=currPos+1;j<=s.length()&&j<=currPos+maxWordLength;j++){
-            if (wordDict.contains(s.substring(currPos,j))){
-                temp.add(j);
-                backtrack(s,wordDict,result,j,temp);
-                temp.remove(temp.size()-1);
+        for (int i = 0; i < end; i++){
+            if (dp[i]){
+                String suffix = s.substring(i, end);
+                if (wordSet.contains(suffix)){
+                    temp.add(0, suffix);
+                    dfs(s, wordSet, temp, i, res, dp);
+                    temp.removeFirst();
+                }
             }
         }
     }
@@ -98,7 +98,7 @@ public class Solution {
     @Test
     public void test(){
         String s="pineapplepenapple";
-        List<String> wordDict=new ArrayList<String>(){{add("apple");add("pen");add("applepen");add("pine");add("pineapple");}};
+        List<String> wordDict = new ArrayList<>(Arrays.asList("apple","pen","applepen","pine","pineapple"));
         System.out.println(wordBreak(s,wordDict));
     }
 }
