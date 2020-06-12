@@ -1,4 +1,4 @@
-package top.tinn.DpProblem.Problem_404;
+package top.tinn.DpProblem.Problem_403;
 
 import java.util.HashMap;
 import java.util.HashSet;
