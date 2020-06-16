@@ -1,0 +1,12 @@
+package top.tinn.Over200.Problem_292;
+
+/**
+ * @author Tintinnabu
+ * @description
+ * @data 2020/6/16
+ */
+public class Solution {
+    public boolean canWinNim(int n) {
+        return n % 4 != 0;
+    }
+}
