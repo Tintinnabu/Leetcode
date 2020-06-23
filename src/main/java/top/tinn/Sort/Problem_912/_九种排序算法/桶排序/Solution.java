@@ -1,4 +1,4 @@
-package top.tinn.Sort.Problem_912_九种排序算法.桶排序;
+package top.tinn.Sort.Problem_912._九种排序算法.桶排序;
 
 import org.junit.jupiter.api.Test;
 
