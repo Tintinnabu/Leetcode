@@ -2,17 +2,20 @@ package top.tinn.Over200.Problem_220;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeSet;
 
 public class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
-        Map<Integer, Integer> map = new HashMap<>();
+        TreeSet<Long> set = new TreeSet<>();
         for (int i = 0; i < nums.length; i++){
-            for (Integer key : map.keySet()){
-                if (Math.abs(key - nums[i]) <= t && Math.abs(map.get(key) - i) <= k){
-                    return true;
-                }
+            Long ceiling = set.ceiling((long)nums[i] - t);
+            if (ceiling != null && ceiling <= (long)nums[i] + t){
+                return true;
             }
-            map.put(nums[i], i);
+            set.add((long)nums[i]);
+            if (set.size() == k + 1){
+                set.remove((long)nums[i - k]);
+            }
         }
         return false;
     }
