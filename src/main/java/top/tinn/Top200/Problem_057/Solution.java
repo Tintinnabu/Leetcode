@@ -3,6 +3,7 @@ package top.tinn.Top200.Problem_057;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,30 +25,33 @@ import java.util.List;
  */
 public class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        if (intervals.length==0) return new int[][]{newInterval};
-        List<int[]> list=new ArrayList<>();
-        boolean flag=false;
-        for (int[] itvl:intervals){
-            if ((itvl[1]>=newInterval[0]&&itvl[0]<newInterval[1])||(itvl[0]<=newInterval[1]&&newInterval[0]<itvl[1])){
-                flag=true;
-                newInterval[0]=Math.min(itvl[0],newInterval[0]);
-                newInterval[1]=Math.max(itvl[1],newInterval[1]);
-            }else {
-                if (flag) {
-                    list.add(newInterval);
-                    flag=false;
-                }
-                list.add(itvl);
-            }
+        List<int[]> res = new ArrayList<>();
+        int i = 0;
+        while (i < intervals.length && intervals[i][1] < newInterval[0]){
+            res.add(intervals[i]);
+            i++;
         }
-        return list.toArray(new int[][]{});
+        int[] temp = newInterval.clone();
+        while (i < intervals.length && newInterval[1] >= intervals[i][0]){
+            temp[0] = Math.min(temp[0], intervals[i][0]);
+            temp[1] = Math.max(temp[1], intervals[i][1]);
+            i++;
+        }
+        res.add(temp);
+        while (i < intervals.length){
+            res.add(intervals[i]);
+            i++;
+        }
+        return res.toArray(new int[0][0]);
     }
 
 
     @Test
     public void test(){
-        int[][] intervals=new int[][]{{1,2},{3,5},{6,7},{8,10},{12,16}};
-        int[] newInterval={4,8};
+        //int[][] intervals=new int[][]{{1,2},{3,5},{6,7},{8,10},{12,16}};
+        int[][] intervals = new int[][]{{1,5}};
+        //int[] newInterval={4,8};
+        int[] newInterval = {2,7};
         System.out.println(insert(intervals,newInterval));
     }
 }
