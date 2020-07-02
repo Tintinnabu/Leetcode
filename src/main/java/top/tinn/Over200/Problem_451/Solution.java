@@ -36,8 +36,8 @@ public class Solution {
             }
         }
         return sb.reverse().toString();
-
     }
+
     @Test
     public void test(){
         String s = "tree";
