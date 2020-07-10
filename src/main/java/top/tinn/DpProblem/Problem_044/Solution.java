@@ -74,6 +74,31 @@ public class Solution {
         return dp[s.length()][p.length()];
     }
 
+    public boolean isMatch2(String s, String p) {
+        int lenS = s.length();
+        int lenP = p.length();
+        boolean[][] dp = new boolean[lenP + 1][lenS + 1];
+        char[] charS = s.toCharArray();
+        char[] charP = p.toCharArray();
+        dp[0][0] = true;
+        for (int i = 0; i < lenP; i++){
+            if (charP[i] == '*'){
+                dp[i + 1][0] = dp[i][0];
+            }
+        }
+        for (int i = 0; i < lenP; i++){
+            for (int j = 0; j < lenS; j++){
+                //匹配一个字符
+                if (charP[i] == charS[j] || charP[i] == '?'){
+                    dp[i + 1][j + 1] = dp[i][j];
+                }else if (charP[i] == '*'){
+                    //可以选择匹配0个或者若干位字符
+                    dp[i + 1][j + 1] = dp[i][j + 1] || dp[i + 1][j];
+                }
+            }
+        }
+        return dp[lenP][lenS];
+    }
 
     @Test
     public void test(){
