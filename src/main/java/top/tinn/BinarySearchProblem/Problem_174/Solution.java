@@ -62,12 +62,35 @@ public class Solution {
         return dp[0][0]+1;
     }
 
+    public int calculateMinimumHP2(int[][] dungeon) {
+        int row = dungeon.length - 1;
+        if (row < 0){
+            return 0;
+        }
+        int col = dungeon[0].length - 1;
+        int[][] dp = new int[row + 1][col + 1];
+        for (int i = row; i >= 0; i--){
+            for (int j = col; j >= 0; j--){
+                if (i == row && j == col){
+                    dp[i][j] = dungeon[i][j] <= 0 ? 1 - dungeon[i][j] : 1;
+                }else if (i == row){
+                    dp[row][j] = Math.max(1, dp[row][j + 1] - dungeon[row][j]);
+                }else if (j == col){
+                    dp[i][col] = Math.max(1, dp[i + 1][col] - dungeon[i][col]);
+                }else{
+                    dp[i][j] = Math.max(1, Math.min(dp[i][j + 1], dp[i + 1][j]) - dungeon[i][j]);
+                }
+            }
+        }
+        return dp[0][0];
+    }
+
     @Test
     public void test(){
         int[][] dungeon=new int[3][3];
         dungeon[0]=new int[]{-2,-3,3};
         dungeon[1]=new int[]{-5,-10,1};
         dungeon[2]=new int[]{10,30,-5};
-        System.out.println(calculateMinimumHP(dungeon));
+        System.out.println(calculateMinimumHP2(dungeon));
     }
 }
