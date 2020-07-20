@@ -1,4 +1,4 @@
-package top.tinn.Sort.Problem_912._九种排序算法.选择排序;
+package top.tinn.CS_Notes.Algorithm.排序.选择排序;
 
 import org.junit.jupiter.api.Test;
 

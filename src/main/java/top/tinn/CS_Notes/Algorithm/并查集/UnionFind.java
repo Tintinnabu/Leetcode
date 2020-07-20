@@ -1,4 +1,4 @@
-package top.tinn.UnionFindProblem;
+package top.tinn.CS_Notes.Algorithm.并查集;
 
 /**
  * @ClassName UnionFind
