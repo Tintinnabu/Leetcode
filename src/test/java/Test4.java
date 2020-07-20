@@ -70,6 +70,7 @@ public class Test4 {
         //b8=(b1+b4);  /*语句3*/
         //b7=(b2+b5);  /*语句4*/
         //System.out.println(b3+b6);
+
     }
 
     void waitForSignal() throws InterruptedException {
