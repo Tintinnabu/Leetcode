@@ -17,7 +17,7 @@ public class Director {
         this.builder = builder;
     }
 
-    public Product contruct(){
+    public Product construct(){
         builder.buildPartA();
         builder.buildPartB();
         builder.buildPartC();

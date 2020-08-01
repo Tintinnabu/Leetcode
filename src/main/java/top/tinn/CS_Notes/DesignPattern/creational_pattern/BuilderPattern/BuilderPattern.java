@@ -10,6 +10,6 @@ public class BuilderPattern {
     public static void main(String[] args) {
         Builder builder = new ConcreteBuilder();
         Director director = new Director(builder);
-        Product product = director.contruct();
+        Product product = director.construct();
     }
 }
