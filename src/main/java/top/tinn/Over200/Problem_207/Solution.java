@@ -2,7 +2,9 @@ package top.tinn.Over200.Problem_207;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 207. 课程表
@@ -62,23 +64,55 @@ public class Solution {
 
     //DFS
     public boolean canFinish2(int numCourses, int[][] prerequisites) {
-        int[][] adjacency = new int[numCourses][numCourses];
-        int[] flags = new int[numCourses];
-        for(int[] cp : prerequisites)
-            adjacency[cp[1]][cp[0]] = 1;
-        for(int i = 0; i < numCourses; i++){
-            if(!dfs(adjacency, flags, i)) return false;
+        // dfs进行判断是否有环
+        // 新建邻接表
+        List<List<Integer>> adjacency = new ArrayList<>(numCourses);
+        for (int i = 0; i < numCourses; ++i) {
+            adjacency.add(new ArrayList<>());
         }
+
+        // 初始化状态节点
+        int[] flags = new int[numCourses];
+
+        // 初始邻接表
+        for (int[] course : prerequisites) {
+            adjacency.get(course[1]).add(course[0]);
+        }
+
+        for (int i = 0; i < numCourses; ++i) {
+            if (!dfs(adjacency, flags, i)) {
+                return false;
+            }
+        }
+
         return true;
     }
-    private boolean dfs(int[][] adjacency, int[] flags, int i) {
-        if(flags[i] == 1) return false;
-        if(flags[i] == -1) return true;
-        flags[i] = 1;
-        for(int j = 0; j < adjacency.length; j++) {
-            if(adjacency[i][j] == 1 && !dfs(adjacency, flags, j)) return false;
+
+    public boolean dfs(List<List<Integer>> adjacency, int[] flags, int cur) {
+        if (flags[cur] == 1) {
+            // 碰到正在遍历的节点 有环
+            return false;
         }
-        flags[i] = -1;
+
+        if (flags[cur] == -1) {
+            // 碰到遍历过的节点
+            return true;
+        }
+
+        // 设置为正在遍历
+        flags[cur] = 1;
+
+        // dfs邻接节点
+        for (Integer next : adjacency.get(cur)) {
+            if (!dfs(adjacency, flags, next)) {
+                return false;
+            }
+        }
+
+        // 设置为遍历完
+        flags[cur] = -1;
+
+        // 可以顺利遍历完
         return true;
     }
 
