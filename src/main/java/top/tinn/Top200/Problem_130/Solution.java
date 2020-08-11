@@ -77,6 +77,52 @@ public class Solution {
         }
     }
 
+    public void solve2(char[][] board) {
+        int rows = board.length;
+        if(rows == 0){
+            return;
+        }
+        int cols = board[0].length;
+        for (int i = 0; i < cols; i++) {
+            if(board[0][i] == 'O'){
+                dfs(0,i,board);
+            }
+            if(board[rows-1][i] == 'O'){
+                dfs(rows-1,i,board);
+            }
+        }
+        for(int i=1;i<rows-1;i++){
+            if(board[i][0] == 'O'){
+                dfs(i,0,board);
+            }
+            if(board[i][cols-1] == 'O'){
+                dfs(i,cols-1,board);
+            }
+        }
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                board[i][j] = board[i][j] == '*' ? 'O' : 'X';
+            }
+        }
+    }
+
+    private void dfs(int i, int j, char[][] board) {
+        if(i < 0 || j < 0 || i == board.length || j == board[0].length){
+            return;
+        }
+        if(board[i][j] == '*'){
+            return;
+        }
+        if(board[i][j] == 'O'){
+            board[i][j] = '*';
+            dfs(i+1,j,board);
+            dfs(i-1,j,board);
+            dfs(i,j+1,board);
+            dfs(i,j-1,board);
+        }
+    }
+
+
     @Test
     public void test(){
         char[][] board = new char[3][3];
