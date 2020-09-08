@@ -1,5 +1,7 @@
 package top.tinn.Top200.Problem_069;
 
+import java.util.Random;
+
 /**
  * @ClassName Solution
  * @Description
