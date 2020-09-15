@@ -9,18 +9,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int num = scanner.nextInt();
-        int ans = 0;
-        for (int i = 0; i < num; i++){
-            ans += scanner.nextInt();
-        }
-        System.out.println(ans);
-        num = scanner.nextInt();
-        ans = 0;
-        for (int i = 0; i < num; i++){
-            ans += scanner.nextInt();
-        }
-        System.out.println(ans);
+
+        System.out.println("\u00234\1234".length());
+        System.out.println("\u0023");
+        System.out.println("\123");
 
     }
 }

@@ -6,7 +6,7 @@ package top.tinn.CS_Notes.DesignPattern.creational_pattern.SingletonPattern.懒�
  * @Author Tinn
  * @Date 2020/4/12 15:15
  */
-public class LazySingleton {
+public class   LazySingleton {
     /**
      * volatile 保证可见性
      */
