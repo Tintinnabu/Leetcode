@@ -1,7 +1,7 @@
 package top.tinn.ConcurrencyProblem.Problem_1114.Synchronization;
 
 public class Foo {
-    private int flag = 0;
+    private volatile int flag = 0;
     private Object lock = new Object();
     public Foo() {
 

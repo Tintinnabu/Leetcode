@@ -42,7 +42,7 @@ public class UnionFind {
 
     public boolean connected(int p, int q) {
         int rootP = find(p);
-        int rootQ = find(q);
+        int rootQ = find(q);                                
         return rootP == rootQ;
     }
 

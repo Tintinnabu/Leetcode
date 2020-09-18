@@ -111,4 +111,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
         moveFlipColor(h);
 
     }*/
+
+    public static void main(String[] args) {
+        RedBlackBST<Integer, Integer> redBlackBST = new RedBlackBST<>();
+        redBlackBST.put(2,5);
+        redBlackBST.put(3,5);
+        redBlackBST.put(1,5);
+        System.out.println(Integer.MAX_VALUE);
+    }
 }
