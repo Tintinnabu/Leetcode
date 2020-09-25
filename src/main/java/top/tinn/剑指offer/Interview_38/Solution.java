@@ -42,6 +42,33 @@ public class Solution {
 
     @Test
     public void test(){
-        System.out.println(Arrays.toString(permutation("aba")));;
+        System.out.println(Arrays.toString(permutation2("aba")));;
+    }
+
+    public String[] permutation2(String s) {
+        char[] schar = s.toCharArray();
+        Arrays.sort(schar);
+        List<String> ans = new ArrayList<>();
+        dfs(schar, new boolean[schar.length], new StringBuilder(), ans);
+        return ans.stream().toArray(String[]::new);
+    }
+
+    private void dfs(char[] schar, boolean[] visited, StringBuilder sb, List<String> ans){
+        if (sb.length() == schar.length){
+            ans.add(sb.toString());
+            return;
+        }
+        for (int j = 0; j < schar.length; j++){
+            if (!visited[j]){
+                if (j == 0 || (!visited[j - 1] && schar[j] == schar[j - 1])
+                || schar[j] != schar[j - 1]){
+                    visited[j] = true;
+                    sb.append(schar[j]);
+                    dfs(schar, visited, sb, ans);
+                    visited[j] = false;
+                    sb.deleteCharAt(sb.length() - 1);
+                }
+            }
+        }
     }
 }

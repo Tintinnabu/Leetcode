@@ -72,7 +72,6 @@ public class Solution {
                 //i[0]++;
                 break;
             }
-
         }
         int res = 0;
         while (!stack.isEmpty())
