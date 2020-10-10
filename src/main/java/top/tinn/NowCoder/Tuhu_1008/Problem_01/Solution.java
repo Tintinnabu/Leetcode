@@ -3,9 +3,8 @@ package top.tinn.NowCoder.Tuhu_1008.Problem_01;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Tinn
@@ -50,5 +49,7 @@ public class Solution {
     @Test
     public void test(){
         System.out.println(workdays_between(2020,9,25,2020,9,28));
+        List<String> ans = new ArrayList<>();
+        List<Integer> ans2 = ans.stream().map(String::length).collect(Collectors.toList());
     }
 }
