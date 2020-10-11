@@ -82,8 +82,7 @@ public class Solution {
 
         boolean[] dp=new boolean[target+1];
         dp[0]=true;
-        if (nums[0]<=target) dp[nums[0]]=true;
-        for(int i=1;i<size;i++){
+        for(int i=0;i<size;i++){
             for(int j=target;nums[i]<=j;j--){
             // 由于状态转移方程的特殊性，提前结束，可以认为是剪枝操作
                 if (dp[target]) {

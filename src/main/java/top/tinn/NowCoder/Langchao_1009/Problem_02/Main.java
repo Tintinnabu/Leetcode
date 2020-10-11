@@ -4,60 +4,60 @@ import java.util.Scanner;
 
 /**
  * @Author: Tinn
- * @Date: 2020/10/9 21:01
+ * @Date: 2020/10/9 21:25
  */
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
-        int curOdd = -1;
-        int curEven = 0;
-        int evenStart = 0;
-        int oddStart = -1;
+        boolean[] mark = new boolean[103];
+        for (int i = 0; i < n; i++){
+            mark[scanner.nextInt()] = true;
+        }
+        int i = 1;
+        int oddStart = 1;
         int oddLen = 0;
-        int evenLen = 0;
-        for (int i = 0; i <= n; i++){
-            if (i == n){
-                int temp = ((100 - curEven) >> 1);
-                if (temp > evenLen){
-                    evenLen = temp;
-                    evenStart = curEven;
-                }
-                temp = ((99 - curOdd) >> 1);
-                if (temp > oddLen){
-                    oddLen = temp;
-                    oddStart = curOdd;
-                }
-                break;
+        while (i <= 99){
+            while (i <= 99&&mark[i]){
+                i += 2;
             }
-            int num = scanner.nextInt();
-            //even
-            if (num % 2 == 0){
-                int temp = ((num - curEven) >> 1) - 1;
-                if (temp > evenLen){
-                    evenLen = temp;
-                    evenStart = curEven;
-                }
-                curEven = num;
-            }else {
-                int temp = ((num - curOdd) >> 1) - 1;
-                if (temp > oddLen){
-                    oddLen = temp;
-                    oddStart = curOdd;
-                }
-                curOdd = num;
+            int count = 0;
+            while (i <= 99&&!mark[i]){
+                count++;
+                i += 2;
+            }
+            if (count > oddLen){
+                oddLen = count;
+                oddStart = i - count * 2;
             }
         }
-        if (evenLen == oddLen){
-            if (evenStart < oddStart){
-                System.out.printf("%d %d", evenStart + 2, evenLen);
-            }else {
-                System.out.printf("%d %d", oddStart + 2, evenLen);
+        int j = 2;
+        int evenStart = 2;
+        int evenLen = 0;
+        while (j <= 100){
+            while (j <= 100 && mark[j]){
+                j += 2;
             }
-        }else if (evenLen < oddLen){
-            System.out.printf("%d %d", oddStart + 2, oddLen);
+            int count = 0;
+            while (j <= 100 && !mark[j]){
+                count++;
+                j+=2;
+            }
+            if (count > evenLen){
+                evenLen = count;
+                evenStart = j - count * 2;
+            }
+        }
+        if (oddLen == evenLen){
+            if (oddStart < evenStart){
+                System.out.printf("%d %d", oddStart, oddLen);
+            }else {
+                System.out.printf("%d %d", evenStart, evenLen);
+            }
+        }else if (oddLen > evenLen){
+            System.out.printf("%d %d", oddStart, oddLen);
         }else {
-            System.out.printf("%d %d", evenStart + 2, evenLen);
+            System.out.printf("%d %d", evenStart, evenLen);
         }
     }
 }
