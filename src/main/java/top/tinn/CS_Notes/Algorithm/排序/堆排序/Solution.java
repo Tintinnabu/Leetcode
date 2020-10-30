@@ -26,6 +26,7 @@ public class Solution {
         return nums;
     }
 
+    //生成大根堆
     private void heapify(int[] nums) {
         int len = nums.length;
         // 只需要从 i = (len - 1) / 2 这个位置开始逐层下移
